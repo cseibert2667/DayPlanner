@@ -10,13 +10,15 @@ $("#currentDay").text(moment().format('dddd, MMMM Do'))
     // build time blocks in html, populate them using local storage
     for (let i = 0; i < timeSlots.length; i++) {
         let slots = timeSlots[i];
-        let slotsHour = slots.time / 100
-        let $row = $("<div>").addClass("row")
-        let $hour = $("<div>").addClass("col-1 hour").text(slots.time)
-        let $input = $("<textarea>").addClass("col-10 description").text(slots.text)
-        let $saveIcon = $("<i>").addClass("far fa-save")
-        // WHEN I view the timeblocks for that day
-        // THEN each timeblock is color coded to indicate whether it is in the past, present, or future
+        // grabs only the first 2 digits from the time key
+        let slotsHour = slots.time / 100;
+        // variables to build all elements and set appropriate attributes
+        let $row = $("<div>").addClass("row time-block").attr("id", "hour-"+slotsHour);
+        let $hour = $("<div>").addClass("col-md-1 hour").text(slots.time);
+        let $input = $("<textarea>").addClass("col-md-10 description").text(slots.text);
+        let $saveIcon = $("<i>").addClass("far fa-save");
+        let $save = $("<button>").addClass("col-md-1 btn saveBtn").append($saveIcon);
+            // color-codes time slots based on current time
             if (currentTime > slotsHour) {
             $input.addClass("past")
             } else if (currentTime < slotsHour) {
@@ -24,16 +26,15 @@ $("#currentDay").text(moment().format('dddd, MMMM Do'))
             } else if (currentTime == slotsHour) {
             $input.addClass("present")
             }
-        let $save = $("<button>")
-        $($save).addClass("col-1 saveBtn").append($saveIcon)
+        // appends cols to row, and row to .container
         $row.append($hour, $input, $save)
-        $(".time-block").append($row)
+        $(".container").append($row)
     }
 
 
 // WHEN I click into a timeblock
 // THEN I can enter an event
-    // USER INPUT -> textbox
+    // USER INPUT -> textarea
 
 // WHEN I click the save button for that timeblock
 // THEN the text for that event is saved in local storage
