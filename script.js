@@ -19,6 +19,7 @@ function buildSchedule() {
         // variables to build all elements and set appropriate attributes
         $row = $("<div>").addClass("row time-block")
         $hour = $("<div>").addClass("col-md-1 hour");
+        // Determines whether to display AM or PM
         if (slotsHour > 12) { $hour.text(slotsHour - 12 + "PM") }
         else { $hour.text(slotsHour + "AM") }
         $input = $("<textarea>").addClass("col-md-10 description").attr("id", "hour" + slotsHour)
@@ -46,15 +47,15 @@ let localSlots = []
 let schedule = localStorage.getItem("schedule");
 if (schedule) {
     schedule = JSON.parse(schedule);
-    $("#hour9").text(schedule.hour9)
-    $("#hour10").text(schedule.hour10)
-    $("#hour11").text(schedule.hour11)
-    $("#hour12").text(schedule.hour12)
-    $("#hour13").text(schedule.hour13)
-    $("#hour14").text(schedule.hour14)
-    $("#hour15").text(schedule.hour15)
-    $("#hour16").text(schedule.hour16)
-    $("#hour17").text(schedule.hour17)
+    $("#hour9").text(schedule.hour9);
+    $("#hour10").text(schedule.hour10);
+    $("#hour11").text(schedule.hour11);
+    $("#hour12").text(schedule.hour12);
+    $("#hour13").text(schedule.hour13);
+    $("#hour14").text(schedule.hour14);
+    $("#hour15").text(schedule.hour15);
+    $("#hour16").text(schedule.hour16);
+    $("#hour17").text(schedule.hour17);
 } else {
     schedule = {};
 }
