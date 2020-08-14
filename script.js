@@ -1,6 +1,6 @@
 // Variables
 
-let timeSlots = [{ time: "0900", text: "" }, { time: "1000", text: "" }, { time: "1100", text: "" }, { time: "1200", text: "" }, { time: "1300", text: "" }, { time: "1400", text: "" }, { time: "1500", text: "" }, { time: "1600", text: "" }, { time: "1700", text: "" },]
+let timeSlots = [{ time: "0900" }, { time: "1000" }, { time: "1100" }, { time: "1200" }, { time: "1300" }, { time: "1400" }, { time: "1500" }, { time: "1600" }, { time: "1700" },]
 
 let currentTime = moment().format("HH");
 
@@ -11,15 +11,17 @@ $("#currentDay").text(moment().format('dddd, MMMM Do'))
 // WHEN I scroll down
 // THEN I am presented with timeblocks for standard business hours
 // build time blocks in html, populate them using local storage
-function buildSchedule(){
+function buildSchedule() {
     for (let i = 0; i < timeSlots.length; i++) {
         let slots = timeSlots[i];
         // grabs only the first 2 digits from the time key
         let slotsHour = slots.time / 100;
         // variables to build all elements and set appropriate attributes
         $row = $("<div>").addClass("row time-block")
-        $hour = $("<div>").addClass("col-md-1 hour").text(slots.time);
-        $input = $("<textarea>").addClass("col-md-10 description").attr("id", "hour"+slotsHour)
+        $hour = $("<div>").addClass("col-md-1 hour");
+        if (slotsHour > 12) { $hour.text(slotsHour - 12 + "PM") }
+        else { $hour.text(slotsHour + "AM") }
+        $input = $("<textarea>").addClass("col-md-10 description").attr("id", "hour" + slotsHour)
         $saveIcon = $("<i>").addClass("far fa-save");
         $save = $("<button>").addClass("col-md-1 btn saveBtn").append($saveIcon);
         // color-codes time slots based on current time
@@ -38,9 +40,11 @@ function buildSchedule(){
 
 buildSchedule();
 
+// WHEN I refresh the page
+// THEN the saved events persist
 let localSlots = []
 let schedule = localStorage.getItem("schedule");
-if(schedule){
+if (schedule) {
     schedule = JSON.parse(schedule);
     $("#hour9").text(schedule.hour9)
     $("#hour10").text(schedule.hour10)
@@ -56,6 +60,8 @@ if(schedule){
 }
 
 
+// WHEN I click the save button for that timeblock
+// THEN the text for that event is saved in local storage
 $(".saveBtn").on("click", function (e) {
     let val = $(this).siblings("textarea")[0].value.trim();
     let id = $(this).siblings("textarea").attr("id");
@@ -66,14 +72,6 @@ $(".saveBtn").on("click", function (e) {
 })
 
 
-// WHEN I click into a timeblock
-// THEN I can enter an event
-    // USER INPUT -> textarea
-
-// WHEN I click the save button for that timeblock
-// THEN the text for that event is saved in local storage
-    // USER INPUT -> click event -> pushes to a certain index within an array stored in local storage (JSON stringify/parse)
 
 
-// WHEN I refresh the page
-// THEN the saved events persist
+
