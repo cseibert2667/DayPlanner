@@ -72,6 +72,11 @@ $(".saveBtn").on("click", function (e) {
     console.log(schedule)
 })
 
+$("#clearBtn").on("click", function (e){
+    localStorage.clear();
+    location.reload();
+})
+
 
 
 
