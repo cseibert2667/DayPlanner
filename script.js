@@ -1,5 +1,6 @@
 // Variables
 let timeSlots = [{ time: "0900", text: "" }, { time: "1000", text: "" }, { time: "1100", text: "" }, { time: "1200", text: "" }, { time: "1300", text: "" }, { time: "1400", text: "" }, { time: "1500", text: "" }, { time: "1600", text: "" }, { time: "1700", text: "" },]
+
 let currentTime = moment().format("HH");
 
 // WHEN I open the planner
@@ -32,11 +33,21 @@ for (let i = 0; i < timeSlots.length; i++) {
     $(".container").append($row)
 }
 
+let schedule = localStorage.getItem("storage");
+ if(schedule){
+     schedule = JSON.parse(schedule);
+ } else {
+     schedule = {};
+ }
+
 $(".saveBtn").on("click", function (e) {
     let val = $(this).siblings("textarea")[0].value.trim();
-    let id = $(this).parent().attr("id");
+    let id = $(this).siblings(".hour").text();
     console.log(val);
     console.log(id);
+    schedule[id] = val;
+    console.log(schedule)
+    localStorage.setItem("schedule", JSON.stringify(schedule))
 })
 
 // WHEN I click into a timeblock
