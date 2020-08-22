@@ -1,4 +1,4 @@
-# DayPlanner-HW
+# DayPlanner
 
 Description: 
 A simple day planner for organizing your work day: save your inputs, close the tab, and reopen as needed!
